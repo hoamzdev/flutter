@@ -10,3 +10,8 @@ by **Hoamz** 👨‍💻✨
   <img src="screenshots/day1_1.png" width="250"/> 
   <img src="screenshots/day1_2.png" width="250"/> 
 </p>
+
+## Demo 2
+<p align="center">
+  <img src="screenshots/day2.png" width="250"/> 
+</p>
