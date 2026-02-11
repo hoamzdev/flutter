@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:ui_flutter/Day_1_Learn_UI/Screen/detailscreen.dart';
-import 'package:ui_flutter/Day_1_Learn_UI/Screen/product.dart';
-import 'package:ui_flutter/Day_1_Learn_UI/Screen/product_detail.dart';
-import 'package:ui_flutter/Day_1_Learn_UI/Utils/colors.dart';
+import 'package:ui_flutter/Day_1_Learn_UI/product.dart';
+import 'package:ui_flutter/Day_1_Learn_UI/product_detail.dart';
+import 'package:ui_flutter/common/constants/app_colors.dart';
 // import 'package:ui_flutter/common/Logger.dart';
 
 class HomeScreen extends StatelessWidget {

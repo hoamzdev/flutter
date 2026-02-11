@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:ui_flutter/Day_1_Learn_UI/Utils/colors.dart';
+import 'package:ui_flutter/common/constants/app_colors.dart';
 
 class ProductUI {
   final String name;
@@ -12,9 +12,16 @@ class ProductUI {
   ProductUI({required this.name, required this.image, required this.price});
 }
 
-class ProductDetail extends StatelessWidget {
+// ignore: must_be_immutable
+class ProductDetail extends StatefulWidget {
   final String tag;
+  const ProductDetail({super.key, required this.tag});
 
+  @override
+  State<ProductDetail> createState() => _ProductDetailState();
+}
+
+class _ProductDetailState extends State<ProductDetail> {
   final Map<String, ProductUI> mapData = {
     '1': ProductUI(
       name: 'House Shape \n ClosePlant',
@@ -28,12 +35,13 @@ class ProductDetail extends StatelessWidget {
     ),
   };
 
-  ProductDetail({super.key, required this.tag});
-
+  IconData iconFavorite = Icons.favorite_border;
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
+    final String tag = widget.tag; //lay du lieu truyen vao
     return Hero(
-      tag: tag,
+      tag: widget.tag,
       child: Scaffold(
         body: Container(
           color: Colors.white,
@@ -111,9 +119,17 @@ class ProductDetail extends StatelessWidget {
                             IconButton(
                               onPressed: () {
                                 //add to favorite
+                                setState(() {
+                                  if (isFavorite == true) {
+                                    iconFavorite = Icons.favorite_border;
+                                  } else {
+                                    iconFavorite = Icons.favorite_outlined;
+                                  }
+                                  isFavorite = !isFavorite;
+                                });
                               },
                               icon: Icon(
-                                Icons.favorite_outline_outlined,
+                                iconFavorite,
                                 color: Colors.pink,
                                 size: 35,
                               ),
