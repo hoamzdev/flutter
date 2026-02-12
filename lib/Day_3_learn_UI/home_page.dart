@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_flutter/Day_3_learn_UI/location_detail.dart';
+import 'package:ui_flutter/Day_3_learn_UI/location_model.dart';
 import 'package:ui_flutter/common/Logger.dart';
 
 class HomePage extends StatefulWidget {
@@ -99,8 +100,18 @@ class _HomePageState extends State<HomePage> {
                           ),
                           optionLocation(
                             size: size,
-                            onClickItem: () {
+                            onClickItem: (idTag) {
                               Logger.logTest(tag: 'Test', msg: 'Clicked');
+                              //qua man hinh detail
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    //return man hinh muon den
+                                    return LocationDetail(idTag: idTag);
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ],
@@ -256,7 +267,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   //lua con dia diem
-  Expanded optionLocation({required Size size, required Function onClickItem}) {
+  Expanded optionLocation({
+    required Size size,
+    required Function(String id) onClickItem,
+  }) {
     return Expanded(
       child: ListView.builder(
         itemCount: locationItems.length,
@@ -268,97 +282,100 @@ class _HomePageState extends State<HomePage> {
             height: double
                 .infinity, //chieu cao(chiem het chieu cao cua column con lai)
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  bottom: 10,
-                  //chiem het dien tich cua stack
-                  child: GestureDetector(
-                    onTap: () => onClickItem(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.pinkAccent.withValues(alpha: 0.1),
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                        image: DecorationImage(
-                          image: AssetImage(locationItems[index].image),
-                          fit: BoxFit.cover,
-                          filterQuality: FilterQuality.high,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        locationItems[index].name,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            locationItems[index].address,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
+            child: Hero(
+              tag: locationItems[index].id,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    bottom: 10,
+                    //chiem het dien tich cua stack
+                    child: GestureDetector(
+                      onTap: () => onClickItem(locationItems[index].id),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.pinkAccent.withValues(alpha: 0.1),
+                              blurRadius: 10,
+                              spreadRadius: 2,
                             ),
+                          ],
+                          image: DecorationImage(
+                            image: AssetImage(locationItems[index].image),
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 10, //cach top 10dp
-                  right: 10, //cach le phai 10dp
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(200), //circle
-                      color: Colors.white38,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          locationItems[index].isMark =
-                              !locationItems[index].isMark;
-                        });
-                      },
-                      icon: Icon(
-                        locationItems[index].isMark == true
-                            ? Icons.bookmark
-                            : Icons.bookmark_outline_rounded,
-                        color: Colors.white,
-                        size: 30,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    bottom: 20,
+                    left: 20,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          locationItems[index].name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              locationItems[index].address,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 10, //cach top 10dp
+                    right: 10, //cach le phai 10dp
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(200), //circle
+                        color: Colors.white38,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            locationItems[index].isMark =
+                                !locationItems[index].isMark;
+                          });
+                        },
+                        icon: Icon(
+                          locationItems[index].isMark == true
+                              ? Icons.bookmark
+                              : Icons.bookmark_outline_rounded,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
           //return widget
