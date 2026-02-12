@@ -19,4 +19,5 @@ by **Hoamz** 👨‍💻✨
 ## Demo 3
 <p align="center">
   <img src="screenshots/day3_1.png" width="250"/> 
+  <img src="screenshots/day3_2.png" width="250"/> 
 </p>
